@@ -1,11 +1,11 @@
 ##--------------------------------------------------------------------------------------------------------
 ## SCRIPT : Merging General and Specific Coding sheets
 ##
-## Authors : Matthieu Authier, Sean Heighton
-## Last update : 2025-07-03
+## Authors : Camille Vogel, Matthieu Authier, Sean Heighton
+## Last update : 2026-09-25
 ##
-## R version 4.2.2 (2022-10-31 ucrt) -- "Innocent and Trusting"
-## Copyright (C) 2020 The R Foundation for Statistical Computing
+## R version 4.6.1 (2026-06-24 ucrt) -- "Happy Hop"
+## Copyright (C) 2026 The R Foundation for Statistical Computing
 ## Platform: x86_64-w64-mingw32/x64 (64-bit)
 ##--------------------------------------------------------------------------------------------------------
 
@@ -31,6 +31,11 @@ data_path <- "./generalcoding/data/"
 
 File = "General_Coding_06-05-2025_&_metadata.csv" #download the General coding file as csv from drive, remove first two rows
 Filename = "General_coding"
+# Note to reviewers: 
+# this data is not published at the time of submission. It is therefore not available. Please submit specific request to authors if needed.
+
+
+
 
 #Upload General Coding csv (already cleaned for newlines)
 coding <- read.csv(paste0(data_path, File), stringsAsFactors = FALSE)
