@@ -5,3 +5,4 @@
 .xlsx
 .csv
 data/*.xlsx
+generalcoding/data/*.csv
