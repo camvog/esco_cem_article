@@ -4,5 +4,5 @@
 .Ruserdata
 .xlsx
 .csv
-data/*.xlsx
+data/raw/*.xlsx
 generalcoding/data/*.csv
