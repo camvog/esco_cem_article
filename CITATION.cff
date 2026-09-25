@@ -1,0 +1,62 @@
+cff-version: 1.2.0
+message: "If you use these data or this code, please cite this release as below."
+type: R code
+title: >-
+  Data and R code for "Understanding the effects of electromagnetic fields
+  on marine biodiversity at offshore wind farms: is scientific literature
+  aligned with the needs?"
+abstract: >-
+  This release provides the dataset of 102 case studies extracted from
+  18 research articles and the R code used to perform the analyses and
+  produce the figures of the review article by Vogel et al. (submitted to
+  Earth's Future). Data are released under a CC-BY-NC-ND-4.0 license and code
+  under an MIT license.
+authors:
+  - family-names: Vogel
+    given-names: Camille
+    # orcid: "https://orcid.org/0000-0002-9590-5982"
+    # affiliation: "Ifremer, HMMN, Laboratoire Ressources Halieutiques, F‐14520 Port‐en‐Bessin, France"
+  - family-names: Carlier
+    given-names: Antoine
+  - family-names: Bacher
+    given-names: Cédric
+  - family-names: Heighton
+    given-names: Sean
+  - family-names: Brind'Amour
+    given-names: Anik
+  - family-names: Niquil
+    given-names: Nathalie
+version: v1.0
+date-released: "2026-09-25"   
+doi: 10.5281/zenodo.XXXXXXX   # DOI réservé sur Zenodo
+# repository-code: "https://github.com/camvog/esco_cem_article.git"
+license:
+  - CC-BY-NC-ND-4.0
+  - MIT
+keywords:
+  - electromagnetic fields
+  - offshore wind farms
+  - marine biodiversity
+  - systematic review
+  - R
+references:
+  - type: article
+    title: >-
+      Understanding the effects of electromagnetic fields on marine
+      biodiversity at offshore wind farms: is scientific literature aligned
+      with the needs?
+    authors:
+      - family-names: Vogel
+        given-names: C.
+      - family-names: Carlier
+        given-names: A.
+      - family-names: Bacher
+        given-names: C.
+      - family-names: Heighton
+        given-names: Sean
+      - family-names: Brind'Amour
+        given-names: A.
+      - family-names: Niquil
+        given-names: N.
+    journal: "Earth's Future"
+    status: submitted
