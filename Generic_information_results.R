@@ -20,19 +20,17 @@ lapply(what_u_need, library, character.only = TRUE)
 rm(list = ls())
 source("./common_functions/esco_functions.r")
 
-mergedata <- read.csv(file = "./CH5/output/Final_Coding_Tool_CHAP_5_CEM_only_GeneralCoding_merged.csv") %>%
+mergedata <- read.csv(file = "./data/output/Final_Coding_Tool_CHAP_5_GeneralCoding_merged.csv")%>%
+                        #"./output/Final_Coding_Tool_CHAP_5_CEM_only_GeneralCoding_merged.csv") %>%
   filter(match_status == "merged")
+
 
 
 ## 1. Bilan des publications selectionnees poissons et benthos
 ##--------------------------------------------------------------------------------------------------------
 
-Fish_and_Benthos <- unique(mergedata$Target)[1:2]
-
-
-mergedata_fb <-  mergedata %>% filter(Target %in% Fish_and_Benthos) 
 # correction complementaire (filtre de 2 refs a exclure)
-mergedata_fb_2 <- mergedata_fb %>% filter(is.na(Pressure_comment) | !str_detect(Pressure_comment, regex("EXCLUDED", ignore_case = TRUE)))
+mergedata_fb_2 <- mergedata %>% filter(is.na(Pressure_comment) | !str_detect(Pressure_comment, regex("EXCLUDED", ignore_case = TRUE)))
 
 # Total nb d'articles de recherche
 
@@ -273,32 +271,7 @@ bilan_stade_vie_indic <- bilan_stade_vie_indic %>% mutate(
 
 
 
-# graph alluviaux
-ggplot(bilan_stade_vie_indic,
-       aes(axis1 = Target
-           , axis2 =  PLSS_lifestage1 
-           #           , axis3 = OICM_generic_indices
-           , axis3 = OICIE_statistical_significance
-           #           , axis3 = OICIE_impact_valence
-           , y = n)) +
-  geom_alluvium(aes(fill = OICIE_statistical_significance), width = 1/12) +
-  geom_stratum(width = 1/12, fill = "gray80", color = "gray30") +
-  geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
-  scale_x_discrete(limits = c("Population", "Life stage", "Statistical\n significance")
-                   , expand = c(.01, .20)) +
-  scale_fill_brewer(type = "qual", palette = "Accent") +
-  my_theme() +
-  labs(#title = "Sankey diagram: Population → Statistical significance → Life stage",
-    y = "Total number of case studies",
-    fill = "Statistical significance")
-
-# ggsave(
-#   filename = "./CH5/output/Fig_1_Sankey_Target_lifestage_statsignif.png",
-#   units = "cm", width = 25, height = 10, dpi = 600
-# )
-
-
-# with ICES standards
+# graph alluviaux - Ready for submission
 ggplot(bilan_stade_vie_indic,
        aes(axis1 = Target,
            axis2 = PLSS_lifestage1,
@@ -354,37 +327,16 @@ ggplot(bilan_stade_vie_indic,
     fill = "Statistical significance"
   )
 
- # ggsave(
- #   filename = "./CH5/output/Fig_1_Sankey_Target_lifestage_statsignif.png",
- #   units = "cm", width = 25, height = 10, dpi = 600
- # )
-
-
-# Fig 1. adaptée au graphical abstract
-
-ggplot(bilan_stade_vie_indic,
-       aes(axis1 = Target
-           , axis2 =  PLSS_lifestage1 
-           #           , axis3 = OICM_generic_indices
-           , axis3 = OICIE_statistical_significance
-           #           , axis3 = OICIE_impact_valence
-           , y = n)) +
-  geom_alluvium(aes(fill = OICIE_statistical_significance), width = 1/12) +
-  geom_stratum(width = 1/12, fill = "gray80", color = "gray30") +
- # geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
-  # scale_x_discrete(limits = c("Population", "Life stage", "Statistical\n significance")
-  #                  , expand = c(.01, .20)) +
-  scale_fill_brewer(type = "qual", palette = "Accent") +
-  my_theme() +
-  labs(#title = "Sankey diagram: Population → Statistical significance → Life stage",
-    y = "Total number of case studies",
-    fill = "Statistical significance")
+ ggsave(
+   filename = "./figures/Fig_1_Sankey_Target_lifestage_statsignif.png",
+   units = "cm", width = 25, height = 10, dpi = 600
+ )
 
 
 
 
 
-## Figure 2 : 
+## Figure 2 : exposure duration VS magnetic field intensity
 ##--------------------------------------------------------------------------------------------------------
 
 magneto <- mergedata_fb_2 %>%
@@ -535,13 +487,14 @@ ggplot(df_bubble_lifestage, aes(x = Duree, y = Intensite_µT)) +
   )
 
 
-# ggsave( filename = "./CH5/output/Figure_1_20260623.png",
-#                        units = "cm", width = 20, height = 15, dpi = 600
-#                )
+ggsave( filename = "./figures/Figure_2_20260925.png",
+                       units = "cm", width = 20, height = 15, dpi = 600
+               )
 
-## Figure 3 : 
+## Figure 3 : chartplots of indicators
 ##--------------------------------------------------------------------------------------------------------
-# définition du tableau de donnees 
+
+### 1. définition du tableau de donnees 
 #     (il contient  l'identification de l'article  
 #                   , le target, la classe taxo
 #                   , les indicateurs
@@ -663,26 +616,19 @@ df_pie <- df_cible_significativite %>%
   mutate(nb_cas = sum(count)
   )
 
+ ### 2. Palette de couleurs
+#------------------------------------------------------------------------------
 
-# library(dplyr)
-# library(ggplot2)
-# 
-# 
-# ##------------------------------------------------------------------------------
-# ## 2. Palette de couleurs
-# ##------------------------------------------------------------------------------
-# 
 cols <- c(
   "Not significant" = "grey70",
   "Increase" = "#c6dbef",   # bleu clair
   "Variable"   = "#6baed6",   # bleu moyen
   "Decrease" = "#2171b5"    # bleu foncé
 )
-# 
-# 
-# 
-#------------------------------------------------------------------------------
-# 3. Graphique en camembert par cible et par indicateur
+
+
+ 
+### 3. Graphique en camembert par cible et par indicateur
 #------------------------------------------------------------------------------
 
 library(dplyr)
@@ -783,7 +729,7 @@ ggplot(df_pie_indic, aes(
     fill = "Effect type"
   )
 
-# ggsave( filename = "./CH5/output/Figure_3_20260618.png",
+# ggsave( filename = "./figures/Figure_3_20260618.png",
 #         units = "cm", width = 40, height = 20, dpi = 1200
 # )
 
@@ -983,7 +929,7 @@ table_s2_indicators <- mergedata_fb_2 %>%
 # Export sous différents formats
 write.csv(
   table_s2_indicators,
-  "./CH5/output/SuppMat/Table_S2_Indicators.csv",
+  "./SuppMat/Table_S2_Indicators.csv",
   row.names = FALSE,
   fileEncoding = "UTF-8"
 )
@@ -991,7 +937,7 @@ write.csv(
 library(writexl)
 write_xlsx(
   table_s2_indicators,
-  "./CH5/output/SuppMat/Table_S2_Indicators.xlsx"
+  "./SuppMat/Table_S2_Indicators.xlsx"
 )
 
 install.packages("flextable")
@@ -1035,5 +981,5 @@ doc <- body_add_par(doc, caption_text, style = "heading 1")
 doc <- body_add_flextable(doc, ft_s2)
 
 # Impression du document Word
-print(doc, target = "./CH5/output/SuppMat/Table_S2_Indicators_ICES.docx")
+print(doc, target = ".//SuppMat/Table_S2_Indicators.docx")
 
